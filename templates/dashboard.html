@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Blood Donor Finder - Dashboard</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f6f8fc;
+            color: #172b4d;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            height: 82px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #e7eaf0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #ed1b2f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+        }
+
+        .logo-text h1 {
+            font-size: 25px;
+            color: #172b4d;
+        }
+
+        .logo-text h1 span {
+            color: #e51c2d;
+        }
+
+        .logo-text p {
+            color: #667085;
+            font-size: 13px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .flash-message {
+            max-width: 1200px;
+            margin: 16px auto 0;
+            padding: 12px 18px;
+            border-radius: 7px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+
+        .flash-message.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .top-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-links a {
+            color: #344563;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .top-links a:hover {
+            color: #e51c2d;
+        }
+
+        .notification {
+            position: relative;
+            font-size: 22px;
+            color: #172b4d;
+            cursor: pointer;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            padding: 0;
+            position: relative;
+        }
+
+        .profile-wrapper {
+            position: relative;
+        }
+
+        .profile-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            min-width: 180px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 8px 22px rgba(23, 43, 77, 0.14);
+            padding: 8px;
+            z-index: 200;
+        }
+
+        .profile-menu.open {
+            display: block;
+        }
+
+        .profile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            color: #172b4d;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .profile-menu a:hover {
+            background: #fff0f2;
+            color: #e51c2d;
+        }
+
+        .profile-image {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #344563;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .profile-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .profile-text span {
+            font-size: 12px;
+            color: #667085;
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 82px);
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 235px;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            padding: 16px 10px;
+            flex-shrink: 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 13px 15px;
+            margin-bottom: 5px;
+            border-radius: 9px;
+            color: #172b4d;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .menu-item:hover {
+            background: #fff0f2;
+            color: #e51c2d;
+        }
+
+        .menu-item.active {
+            background: #ed1b2f;
+            color: white;
+        }
+
+        .menu-item .count {
+            margin-left: auto;
+            background: #e51c2d;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .menu-item.active .count {
+            background: white;
+            color: #e51c2d;
+        }
+
+        .sidebar-line {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 18px 10px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            flex: 1;
+            padding: 28px;
+            overflow: hidden;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 330px;
+            gap: 20px;
+        }
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            min-height: 190px;
+            background: linear-gradient(100deg, #fff2f3, #fff);
+            border: 1px solid #ffd8dc;
+            border-radius: 12px;
+            padding: 25px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome h2 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            color: #667085;
+            font-size: 14px;
+            max-width: 450px;
+            line-height: 1.6;
+        }
+
+        .welcome-button {
+            margin-top: 18px;
+            background: #ed1b2f;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .welcome-button:hover {
+            background: #c91527;
+        }
+
+        .welcome-art {
+            position: absolute;
+            right: 50px;
+            top: 20px;
+            font-size: 100px;
+            color: #ed1b2f;
+            opacity: 0.9;
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .quick-actions {
+            background: white;
+            border: 1px solid #e6e9ef;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-title i {
+            color: #ed1b2f;
+            margin-right: 8px;
+        }
+
+        .action-btn {
+            width: 100%;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 9px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .action-btn i {
+            margin-right: 12px;
+            width: 18px;
+        }
+
+        .action-red {
+            background: #ed1b2f;
+            color: white;
+        }
+
+        .action-light-red {
+            background: #fff0f2;
+            color: #172b4d;
+        }
+
+        .action-blue {
+            background: #eaf4ff;
+            color: #1769aa;
+        }
+
+        .action-green {
+            background: #e8f8ef;
+            color: #147d48;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            grid-column: 1 / 2;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e6e9ef;
+            border-radius: 11px;
+            padding: 17px;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .red-icon {
+            background: #fff0f2;
+            color: #ed1b2f;
+        }
+
+        .blue-icon {
+            background: #e9f3ff;
+            color: #1976d2;
+        }
+
+        .orange-icon {
+            background: #fff7df;
+            color: #ee9d00;
+        }
+
+        .green-icon {
+            background: #e7f8ef;
+            color: #15945a;
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: #667085;
+        }
+
+        .stat-number {
+            font-size: 23px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .stat-growth {
+            font-size: 10px;
+            color: #15945a;
+            margin-top: 7px;
+        }
+
+        /* ================= CONTENT CARDS ================= */
+
+        .content-left {
+            grid-column: 1 / 2;
+        }
+
+        .content-right {
+            grid-column: 2 / 3;
+            grid-row: 2 / span 3;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e6e9ef;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        /* ================= MAP ================= */
+
+        .map-card {
+            min-height: 300px;
+        }
+
+        .map-area {
+            height: 230px;
+            border-radius: 9px;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(35deg, transparent 47%, #c9d9ca 48%, #c9d9ca 52%, transparent 53%),
+                linear-gradient(110deg, transparent 45%, #d7e0c9 46%, #d7e0c9 54%, transparent 55%),
+                #e9edf0;
+        }
+
+        .map-road {
+            position: absolute;
+            height: 5px;
+            background: white;
+            transform: rotate(25deg);
+            width: 130%;
+            left: -20px;
+            top: 100px;
+        }
+
+        .map-road.two {
+            transform: rotate(-35deg);
+            top: 145px;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ed1b2f;
+            color: white;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-pin i {
+            transform: rotate(45deg);
+            font-size: 12px;
+        }
+
+        .pin1 { top: 30px; left: 25%; }
+        .pin2 { top: 80px; left: 50%; }
+        .pin3 { top: 145px; left: 75%; }
+        .pin4 { top: 165px; left: 30%; }
+
+        .location-pin {
+            position: absolute;
+            top: 95px;
+            left: 48%;
+            width: 50px;
+            height: 50px;
+            background: #1684e8;
+            border: 7px solid #d4ebff;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* ================= DONOR LIST ================= */
+
+        .donor-list {
+            padding-left: 12px;
+        }
+
+        .donor {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #edf0f3;
+            font-size: 11px;
+        }
+
+        .donor:last-child {
+            border-bottom: none;
+        }
+
+        .donor-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .donor-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #fff0f2;
+            color: #ed1b2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .available {
+            background: #dff8e9;
+            color: #168447;
+            padding: 4px 8px;
+            border-radius: 10px;
+            margin-right: 5px;
+        }
+
+        .contact-btn {
+            background: #ed1b2f;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        /* ================= BLOOD REQUEST ================= */
+
+        .request-card {
+            border-color: #ffd8dc;
+        }
+
+        .request-card .section-title {
+            color: #ed1b2f;
+        }
+
+        .request-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 12px;
+        }
+
+        .request-row span:first-child {
+            color: #667085;
+        }
+
+        .urgency {
+            background: #ffe1e5;
+            color: #e51c2d;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+        }
+
+        .hospital-btn {
+            width: 100%;
+            background: #ed1b2f;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .delete-request-btn {
+            border: 1px solid #d32f2f;
+            background: white;
+            color: #c62828;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .delete-request-btn:hover {
+            background: #ffebee;
+        }
+
+        /* ================= RECENT REQUESTS ================= */
+
+        .recent-card {
+            margin-top: 18px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        th {
+            color: #667085;
+            font-weight: 500;
+            text-align: left;
+            padding: 11px 8px;
+            background: #fafbfc;
+        }
+
+        td {
+            padding: 12px 8px;
+            border-top: 1px solid #edf0f3;
+        }
+
+        .status {
+            padding: 4px 9px;
+            border-radius: 10px;
+            font-size: 9px;
+        }
+
+        .status-open {
+            background: #ffe4e8;
+            color: #df1d34;
+        }
+
+        .status-assigned {
+            background: #dff8e9;
+            color: #168447;
+        }
+
+        /* ================= RIGHT SIDE ================= */
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .notifications {
+            background: white;
+            border: 1px solid #e6e9ef;
+            border-radius: 12px;
+            padding: 17px;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0f3;
+            font-size: 11px;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ed1b2f;
+            margin-top: 5px;
+        }
+
+        .notification-dot.green {
+            background: #15945a;
+        }
+
+        .notification-dot.blue {
+            background: #1684e8;
+        }
+
+        .notification-item span {
+            color: #98a2b3;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* ================= HELPLINE ================= */
+
+        .helpline {
+            background: #fff0f2;
+            border: 1px solid #ffd8dc;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .helpline i {
+            color: #ed1b2f;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .helpline h3 {
+            color: #e51c2d;
+            font-size: 21px;
+        }
+
+        .helpline p {
+            font-size: 11px;
+            color: #667085;
+        }
+
+        /* ================= DONATE CARD ================= */
+
+        .donate-card {
+            min-height: 190px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fff1f2, #ffe0e4);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .donate-card h2 {
+            font-size: 21px;
+        }
+
+        .donate-card h2 span {
+            color: #e51c2d;
+        }
+
+        .donate-card p {
+            font-size: 11px;
+            color: #667085;
+            width: 55%;
+            margin-top: 8px;
+        }
+
+        .donate-btn {
+            background: #ed1b2f;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 9px 17px;
+            margin-top: 13px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .blood-drop {
+            position: absolute;
+            right: 20px;
+            bottom: -5px;
+            font-size: 100px;
+            color: #ed1b2f;
+            opacity: 0.9;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-column: auto;
+            }
+
+            .content-left,
+            .content-right {
+                grid-column: auto;
+                grid-row: auto;
+            }
+
+            .right-column {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .menu-item span {
+                display: none;
+            }
+
+            .menu-item {
+                justify-content: center;
+            }
+
+            .menu-item .count {
+                display: none;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .header {
+                padding: 0 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                height: 70px;
+            }
+
+            .layout {
+                min-height: calc(100vh - 70px);
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-art {
+                display: none;
+            }
+
+            .profile-text {
+                display: none;
+            }
+
+            .logo-text h1 {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+
+        <div class="logo-text">
+            <h1>Smart <span>Blood Donor</span> Finder</h1>
+            <p>Connect &nbsp;•&nbsp; Donate &nbsp;•&nbsp; Save Lives</p>
+        </div>
+
+    </div>
+
+    <div class="header-right">
+
+        <nav class="top-links" aria-label="Helpful links">
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('testimonials') }}">Testimonials</a>
+            <a href="{{ url_for('feedback') }}">Feedback</a>
+        </nav>
+
+        <div class="notification">
+            <i class="fa-regular fa-bell"></i>
+        </div>
+
+        <div class="profile-wrapper">
+            <button class="profile" id="profileToggle" type="button" aria-expanded="false" aria-controls="profileMenu">
+
+                <span class="profile-image">
+                    <i class="fa-solid fa-user"></i>
+                </span>
+
+                <span class="profile-text">
+                    <strong>Hello, {{ profile.name }}</strong>
+                    <span>Donor</span>
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+                <a href="{{ url_for('settings') }}">
+                    <i class="fa-solid fa-user-pen"></i>
+                    Edit Profile
+                </a>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+
+<div class="layout">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <a class="menu-item active" href="/dashboard">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a class="menu-item" href="/settings">
+        <i class="fa-solid fa-user"></i>
+        <span>My Profile</span>
+    </a>
+
+    <a class="menu-item" href="/find-donor">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Find a Donor</span>
+    </a>
+
+    <a class="menu-item" href="/blood-request">
+        <i class="fa-solid fa-droplet"></i>
+        <span>Blood Requests</span>
+        {% if blood_request_count %}
+            <div class="count">{{ blood_request_count }}</div>
+        {% endif %}
+    </a>
+
+    <a class="menu-item" href="/blood-bank">
+        <i class="fa-solid fa-building-columns"></i>
+        <span>Blood Banks</span>
+    </a>
+
+    <a class="menu-item" href="/hospitals">
+        <i class="fa-solid fa-hospital"></i>
+        <span>Hospitals</span>
+    </a>
+
+    <a class="menu-item" href="{{ url_for('ambulances') }}">
+        <i class="fa-solid fa-truck-medical"></i>
+        <span>Ambulance Services</span>
+    </a>
+
+    <a class="menu-item" href="{{ url_for('first_aid') }}">
+        <i class="fa-solid fa-kit-medical"></i>
+        <span>First Aid &amp; Helpline</span>
+    </a>
+
+    <a class="menu-item" href="/blood-request">
+        <i class="fa-solid fa-heart"></i>
+        <span>My Donations</span>
+    </a>
+
+    <a class="menu-item" href="/notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span>Notifications</span>
+    </a>
+
+    <a class="menu-item" href="/settings">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+    </a>
+
+    <div class="sidebar-line"></div>
+
+    <a class="menu-item" href="/logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<div class="dashboard-grid">
+
+
+<!-- ================= LEFT CONTENT ================= -->
+
+<div class="content-left">
+
+    <!-- Welcome -->
+    <section class="welcome">
+
+        <h2>Welcome Back, {{ profile.name or 'Donor' }}!</h2>
+
+        <p>
+            Your kindness can save lives. Together
+            we can build a healthier tomorrow.
+        </p>
+
+        <button class="welcome-button" onclick="donateBlood()">
+            <i class="fa-solid fa-droplet"></i>
+            &nbsp; Donate Blood
+        </button>
+
+        <div class="welcome-art">
+            <i class="fa-solid fa-hand-holding-medical"></i>
+        </div>
+
+    </section>
+
+
+    <!-- Statistics -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon red-icon">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+
+                <div>
+                    <div class="stat-title">Total Donors</div>
+                    <div class="stat-number">1,248</div>
+                </div>
+
+            </div>
+
+            <div class="stat-growth">
+                ↑ 12% this month
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon blue-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <div>
+                    <div class="stat-title">Active Donors</div>
+                    <div class="stat-number">892</div>
+                </div>
+
+            </div>
+
+            <div class="stat-growth">
+                ↑ 10% this month
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon orange-icon">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+
+                <div>
+                    <div class="stat-title">Blood Requests</div>
+                    <div class="stat-number">48</div>
+                </div>
+
+            </div>
+
+            <div class="stat-growth">
+                ↑ 5% this month
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon green-icon">
+                    <i class="fa-solid fa-hospital"></i>
+                </div>
+
+                <div>
+                    <div class="stat-title">Partner Hospitals</div>
+                    <div class="stat-number">32</div>
+                </div>
+
+            </div>
+
+            <div class="stat-growth">
+                ↑ 8% this month
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Map + Active Request -->
+
+    <section class="two-columns">
+
+        <!-- Nearby Donors -->
+
+        <div class="card map-card">
+
+            <div class="section-title">
+                <i class="fa-solid fa-location-dot"></i>
+                Nearby Donors
+            </div>
+
+            <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:10px;">
+
+                <div class="map-area">
+
+                    <div class="map-road"></div>
+                    <div class="map-road two"></div>
+
+                    <div class="map-pin pin1">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <div class="map-pin pin2">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <div class="map-pin pin3">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <div class="map-pin pin4">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <div class="location-pin">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="donor-list">
+                    {% for donor in nearby_donors %}
+                        <div class="donor">
+                            <div class="donor-info">
+                                <div class="donor-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div>
+                                    <strong>{{ donor.full_name }}</strong><br>
+                                    {{ donor.blood_group }} &nbsp;•&nbsp; {{ donor.city }}, {{ donor.state }}
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="available">{{ donor.availability or 'Available' }}</span>
+                                {% if donor.mobile %}
+                                    <a class="contact-btn" href="tel:{{ donor.mobile }}">Contact</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No available donors found in the database.</p>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Active Blood Request -->
+
+        <div class="card request-card">
+
+            <div class="section-title">
+                <i class="fa-solid fa-droplet"></i>
+                Active Blood Request
+            </div>
+
+            {% if latest_requests %}
+                {% set active_request = latest_requests[0] %}
+                <div class="request-row">
+                    <span>Patient:</span>
+                    <strong>{{ active_request.patient_name }}</strong>
+                </div>
+
+                <div class="request-row">
+                    <span>Blood Group:</span>
+                    <strong>{{ active_request.blood_group }}</strong>
+                </div>
+
+                <div class="request-row">
+                    <span>Hospital:</span>
+                    <strong>{{ active_request.hospital_name }}</strong>
+                </div>
+
+                <div class="request-row">
+                    <span>Location:</span>
+                    <strong>{{ active_request.hospital_location or 'Not provided' }}</strong>
+                </div>
+
+                <div class="request-row">
+                    <span>Urgency:</span>
+                    <span class="urgency">{{ active_request.emergency_level }}</span>
+                </div>
+
+                {% if active_request.contact_number %}
+                    <a class="hospital-btn" href="tel:{{ active_request.contact_number }}">
+                        <i class="fa-solid fa-phone"></i>
+                        &nbsp; Contact Requester
+                    </a>
+                {% endif %}
+                <form method="POST" action="{{ url_for('delete_blood_request', request_id=active_request.id) }}">
+                    <button class="delete-request-btn" type="submit">Delete Request</button>
+                </form>
+            {% else %}
+                <p>No active blood requests right now.</p>
+                <a class="hospital-btn" href="{{ url_for('blood_request') }}">
+                    <i class="fa-solid fa-plus"></i>
+                    &nbsp; Raise a Blood Request
+                </a>
+            {% endif %}
+
+            <h3 class="section-title">Nearby Hospital Contacts</h3>
+            {% for hospital in nearby_hospitals %}
+                <div class="request-row">
+                    <span>{{ hospital.name }}<br><small>{{ hospital.location }}</small></span>
+                    <a href="tel:{{ hospital.phone }}" aria-label="Call {{ hospital.name }}">
+                        <i class="fa-solid fa-phone"></i> {{ hospital.phone }}
+                    </a>
+                </div>
+            {% endfor %}
+
+            <h3 class="section-title">Ambulance Contacts</h3>
+            {% for ambulance in ambulance_contacts %}
+                <div class="request-row">
+                    <span>{{ ambulance.name }}<br><small>{{ ambulance.location }}</small></span>
+                    <a href="tel:{{ ambulance.phone }}" aria-label="Call {{ ambulance.name }}">
+                        <i class="fa-solid fa-truck-medical"></i> {{ ambulance.phone }}
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- Recent Requests -->
+
+    <section class="card recent-card">
+
+        <div class="section-title">
+            <i class="fa-solid fa-droplet"></i>
+            Recent Blood Requests
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Blood Group</th>
+                        <th>Hospital</th>
+                        <th>Location</th>
+                        <th>Urgency</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for blood_request in latest_requests %}
+                        <tr>
+                            <td>{{ blood_request.patient_name }}</td>
+                            <td>{{ blood_request.blood_group }}</td>
+                            <td>{{ blood_request.hospital_name }}</td>
+                            <td>{{ blood_request.hospital_location or 'Not provided' }}</td>
+                            <td><span class="urgency">{{ blood_request.emergency_level }}</span></td>
+                            <td><span class="status status-open">{{ blood_request.status or 'Open' }}</span></td>
+                            <td>
+                                <form method="POST" action="{{ url_for('delete_blood_request', request_id=blood_request.id) }}">
+                                    <button class="delete-request-btn" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">No active blood requests.</td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ================= RIGHT COLUMN ================= -->
+
+<div class="right-column">
+
+
+    <!-- Quick Actions -->
+
+    <div class="quick-actions">
+
+        <div class="section-title">
+            <i class="fa-solid fa-droplet"></i>
+            Quick Actions
+        </div>
+
+        <button class="action-btn action-red"
+                onclick="findDonor()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Find a Donor
+        </button>
+
+        <button class="action-btn action-light-red"
+                onclick="requestBlood()">
+            <i class="fa-solid fa-droplet"></i>
+            Request Blood
+        </button>
+
+        <button class="action-btn action-blue"
+                onclick="bloodBanks()">
+            <i class="fa-solid fa-building-columns"></i>
+            View Nearby Blood Banks
+        </button>
+
+        <button class="action-btn action-green"
+                onclick="hospitals()">
+            <i class="fa-solid fa-hospital"></i>
+            Find Hospitals
+        </button>
+
+    </div>
+
+
+    <!-- Notifications -->
+
+    <div class="notifications">
+
+        <div class="section-title">
+            <i class="fa-solid fa-bell"></i>
+            Recent Notifications
+        </div>
+
+        {% for notification in notifications %}
+            <div class="notification-item">
+                <div class="notification-dot"></div>
+                <div>
+                    {{ notification.message }}
+                    <span>{{ notification.time }}</span>
+                </div>
+            </div>
+        {% else %}
+            <div class="notification-item">
+                <div class="notification-dot blue"></div>
+                <div>
+                    No new blood requests
+                    <span>All caught up</span>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+    <!-- Helpline -->
+
+    <div class="helpline">
+
+        <i class="fa-solid fa-phone"></i>
+
+        <h3>8639-203-859</h3>
+
+        <p>
+            Need help? Call us 24/7
+        </p>
+
+    </div>
+
+
+    <!-- Donate Card -->
+
+    <div class="donate-card">
+
+        <h2>
+            Be a Donor<br>
+            Be a <span>Hero</span>
+        </h2>
+
+        <p>
+            Your donation can help save lives.
+        </p>
+
+        <button class="donate-btn" onclick="donateBlood()">
+            Donate Now →
+        </button>
+
+        <div class="blood-drop">
+            <i class="fa-solid fa-droplet"></i>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    function donateBlood() {
+        window.location.href = "/register";
+    }
+
+    function findDonor() {
+        window.location.href = "/find-donor";
+    }
+
+    function requestBlood() {
+        window.location.href = "/blood-request";
+    }
+
+    function bloodBanks() {
+        window.location.href = "/blood-bank";
+    }
+
+    function hospitals() {
+        window.location.href = "/hospitals";
+    }
+
+    function contactHospital() {
+        window.location.href = "tel:18001234567";
+    }
+
+    const profileToggle = document.getElementById("profileToggle");
+    const profileMenu = document.getElementById("profileMenu");
+
+    profileToggle.addEventListener("click", function(event) {
+        event.stopPropagation();
+        const isOpen = profileMenu.classList.toggle("open");
+        profileToggle.setAttribute("aria-expanded", isOpen);
+    });
+
+    document.addEventListener("click", function(event) {
+        if (!event.target.closest(".profile-wrapper")) {
+            profileMenu.classList.remove("open");
+            profileToggle.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    // Sidebar menu click
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    menuItems.forEach(item => {
+
+        item.addEventListener("click", function() {
+
+            menuItems.forEach(menu => {
+                menu.classList.remove("active");
+            });
+
+            this.classList.add("active");
+
+        });
+
+    });
+
+    // Contact donor buttons
+    const contactButtons =
+        document.querySelectorAll(".contact-btn");
+
+    contactButtons.forEach(button => {
+
+        button.addEventListener("click", function() {
+
+            const donorName =
+                this.closest(".donor")
+                    .querySelector("strong").innerText;
+
+            alert("Contacting donor: " + donorName);
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

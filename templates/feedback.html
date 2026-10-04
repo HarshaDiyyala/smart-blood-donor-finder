@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback | Smart Blood Donor Finder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #b71c1c;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 45px auto;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .feedback-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .title {
+            text-align: center;
+            color: #b71c1c;
+            margin-bottom: 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            color: #b71c1c;
+            margin: 25px 0 15px;
+
+            padding-bottom: 8px;
+
+            border-bottom: 2px solid #eeeeee;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .required {
+            color: red;
+        }
+
+
+        /* ================= INPUT ================= */
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #b71c1c;
+
+            box-shadow:
+                0 0 5px rgba(183, 28, 28, 0.2);
+        }
+
+        textarea {
+
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+
+        /* ================= RATING ================= */
+
+        .rating-container {
+
+            display: flex;
+
+            flex-direction: row-reverse;
+
+            justify-content: flex-end;
+
+            gap: 5px;
+
+            margin-top: 8px;
+        }
+
+        .rating-container input {
+
+            display: none;
+        }
+
+        .rating-container label {
+
+            font-size: 35px;
+
+            color: #ccc;
+
+            cursor: pointer;
+
+            margin: 0;
+
+            transition: 0.2s;
+        }
+
+        .rating-container label:hover,
+        .rating-container label:hover ~ label {
+
+            color: #ffc107;
+        }
+
+        .rating-container input:checked ~ label {
+
+            color: #ffc107;
+        }
+
+
+        /* ================= FEEDBACK TYPE ================= */
+
+        .feedback-options {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .feedback-option {
+
+            flex: 1;
+
+            min-width: 130px;
+        }
+
+        .feedback-option input {
+
+            display: none;
+        }
+
+        .feedback-option label {
+
+            text-align: center;
+
+            padding: 13px;
+
+            border: 2px solid #ddd;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .feedback-option label:hover {
+
+            border-color: #b71c1c;
+        }
+
+        .feedback-option input:checked + label {
+
+            border-color: #b71c1c;
+
+            background: #ffebee;
+
+            color: #b71c1c;
+        }
+
+
+        /* ================= CHECKBOX ================= */
+
+        .checkbox-group {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+        .checkbox-group input {
+
+            width: auto;
+        }
+
+        .checkbox-group label {
+
+            margin: 0;
+
+            font-weight: normal;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .submit-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 20px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #c62828;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+
+            background: #8e0000;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= INFO ================= */
+
+        .info-box {
+
+            background: #fff3cd;
+
+            border-left: 5px solid #ffc107;
+
+            padding: 14px;
+
+            margin-top: 25px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            border-radius: 5px;
+        }
+
+
+        /* ================= SUCCESS ================= */
+
+        .success-message {
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            padding: 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            display: none;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background: #212121;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+
+            margin-top: 50px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 650px) {
+
+            header {
+
+                flex-direction: column;
+
+                gap: 15px;
+
+                text-align: center;
+            }
+
+            nav a {
+
+                margin: 5px;
+            }
+
+            .row {
+
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+
+                grid-column: auto;
+            }
+
+            .feedback-options {
+
+                flex-direction: column;
+            }
+
+            .feedback-card {
+
+                padding: 22px;
+            }
+
+            .title {
+
+                font-size: 25px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <h1>
+        🩸 Smart Blood Donor Finder
+    </h1>
+
+    <nav>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/find-donor">
+            Find Donor
+        </a>
+
+        <a href="/blood-banks">
+            Blood Banks
+        </a>
+
+        <a href="/about">
+            About Us
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+    <div class="feedback-card">
+
+
+        <h2 class="title">
+            💬 Feedback
+        </h2>
+
+        <p class="subtitle">
+            Your feedback helps us improve the Smart Blood Donor Finder.
+        </p>
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+            class="success-message"
+            id="successMessage"
+        >
+            Thank you for your valuable feedback! ❤️
+        </div>
+
+
+
+        <!-- ================= FORM ================= -->
+
+        <form
+            action="/feedback"
+            method="POST"
+            id="feedbackForm"
+        >
+
+
+            <!-- USER DETAILS -->
+
+            <h3 class="section-title">
+                👤 Your Details
+            </h3>
+
+
+            <div class="row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FEEDBACK TYPE -->
+
+            <h3 class="section-title">
+                📋 Feedback Type
+            </h3>
+
+
+            <div class="feedback-options">
+
+
+                <div class="feedback-option">
+
+                    <input
+                        type="radio"
+                        id="suggestion"
+                        name="feedback_type"
+                        value="Suggestion"
+                        checked
+                    >
+
+                    <label for="suggestion">
+                        💡 Suggestion
+                    </label>
+
+                </div>
+
+
+
+                <div class="feedback-option">
+
+                    <input
+                        type="radio"
+                        id="experience"
+                        name="feedback_type"
+                        value="Experience"
+                    >
+
+                    <label for="experience">
+                        ❤️ Experience
+                    </label>
+
+                </div>
+
+
+
+                <div class="feedback-option">
+
+                    <input
+                        type="radio"
+                        id="bug"
+                        name="feedback_type"
+                        value="Problem"
+                    >
+
+                    <label for="bug">
+                        ⚠️ Problem
+                    </label>
+
+                </div>
+
+
+
+                <div class="feedback-option">
+
+                    <input
+                        type="radio"
+                        id="other"
+                        name="feedback_type"
+                        value="Other"
+                    >
+
+                    <label for="other">
+                        📝 Other
+                    </label>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RATING -->
+
+            <h3 class="section-title">
+                ⭐ Rate Our Website
+            </h3>
+
+
+            <div class="form-group">
+
+                <label>
+                    How would you rate your experience?
+                </label>
+
+
+                <div class="rating-container">
+
+
+                    <input
+                        type="radio"
+                        id="star5"
+                        name="rating"
+                        value="5"
+                        required
+                    >
+
+                    <label for="star5">
+                        ★
+                    </label>
+
+
+
+                    <input
+                        type="radio"
+                        id="star4"
+                        name="rating"
+                        value="4"
+                    >
+
+                    <label for="star4">
+                        ★
+                    </label>
+
+
+
+                    <input
+                        type="radio"
+                        id="star3"
+                        name="rating"
+                        value="3"
+                    >
+
+                    <label for="star3">
+                        ★
+                    </label>
+
+
+
+                    <input
+                        type="radio"
+                        id="star2"
+                        name="rating"
+                        value="2"
+                    >
+
+                    <label for="star2">
+                        ★
+                    </label>
+
+
+
+                    <input
+                        type="radio"
+                        id="star1"
+                        name="rating"
+                        value="1"
+                    >
+
+                    <label for="star1">
+                        ★
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <h3 class="section-title">
+                📝 Your Feedback
+            </h3>
+
+
+            <div class="form-group">
+
+                <label>
+                    Message
+                    <span class="required">*</span>
+                </label>
+
+
+                <textarea
+                    name="message"
+                    placeholder="Please tell us your feedback, suggestions or experience..."
+                    minlength="5"
+                    maxlength="1000"
+                    required
+                ></textarea>
+
+
+            </div>
+
+
+
+            <!-- PERMISSION -->
+
+            <div class="checkbox-group">
+
+                <input
+                    type="checkbox"
+                    id="permission"
+                    name="permission"
+                    value="yes"
+                >
+
+                <label for="permission">
+
+                    I allow the Smart Blood Donor Finder team
+                    to use my feedback for improvement.
+
+                </label>
+
+            </div>
+
+
+
+            <!-- INFO -->
+
+            <div class="info-box">
+
+                <strong>Thank you!</strong>
+
+                Your feedback helps us make blood donation and
+                emergency blood requests faster, easier and more useful
+                for patients, hospitals and donors.
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+
+                💬 Submit Feedback
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 Smart Blood Donor Finder
+
+    <br>
+
+    The hope of every Indian in search of a voluntary blood donor.
+
+</footer>
+
+
+
+<script>
+
+    /*
+       Set the current year automatically
+    */
+
+    const year =
+        new Date().getFullYear();
+
+    document.querySelector("footer")
+        .innerHTML =
+        `© ${year} Smart Blood Donor Finder
+        <br>
+        The hope of every Indian in search of a voluntary blood donor.`;
+
+
+    /*
+       Basic form submit protection
+    */
+
+    document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function(event) {
+
+            const message =
+                document.querySelector(
+                    'textarea[name="message"]'
+                ).value.trim();
+
+
+            if (message.length < 5) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please enter at least 5 characters in your feedback."
+                );
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

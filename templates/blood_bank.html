@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blood Banks | Smart Blood Donor Finder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #c62828;
+            color: white;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 11px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .logout-btn {
+            background: white;
+            color: #c62828 !important;
+            font-weight: bold;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #c62828;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .search-title {
+            color: #c62828;
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #c62828;
+            box-shadow: 0 0 0 3px rgba(198,40,40,0.08);
+        }
+
+        .search-button-area {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-btn {
+            border: none;
+            background: #c62828;
+            color: white;
+            padding: 13px 35px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #a91f1f;
+        }
+
+        .reset-btn {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 12px 25px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* ================= DATA SUMMARY ================= */
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .summary h2 {
+            color: #333;
+            font-size: 23px;
+        }
+
+        .count {
+            background: #ffebee;
+            color: #c62828;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1100px;
+        }
+
+        th {
+            background: #c62828;
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #fff8f8;
+        }
+
+        .type-government {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 15px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .type-private {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 15px;
+            background: #fff3e0;
+            color: #ef6c00;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .phone {
+            color: #1565c0;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .email {
+            color: #555;
+        }
+
+        .map-btn {
+            display: inline-block;
+            background: #c62828;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .map-btn:hover {
+            background: #a91f1f;
+        }
+
+        /* ================= NO DATA ================= */
+
+        .no-data {
+            text-align: center;
+            padding: 50px 20px;
+            color: #777;
+        }
+
+        .no-data-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .no-data h3 {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f3f7ff;
+            border: 1px solid #c5d7f5;
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: #2455a4;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #ff8a80;
+            text-decoration: none;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 1000px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .page-title {
+                font-size: 26px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 7px 8px;
+            }
+
+            .search-btn,
+            .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 8px 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div>
+        <div class="logo">
+            🩸 Smart Blood Donor Finder
+        </div>
+
+        <div class="tagline">
+            The hope of every Indian in search of a voluntary blood donor
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/find-donor">Find Donor</a>
+        <a href="/request-details">Blood Request</a>
+        <a href="/blood-banks">Blood Banks</a>
+        <a href="/about">About Us</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </nav>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+    <h1 class="page-title">
+        🏥 Blood Banks & Hospitals
+    </h1>
+
+    <p class="page-subtitle">
+        Find government and private hospitals and blood banks
+        across different locations.
+    </p>
+
+
+    <!-- ================= SEARCH CARD ================= -->
+
+    <div class="search-card">
+
+        <h2 class="search-title">
+            🔎 Search Blood Banks / Hospitals
+        </h2>
+
+        <form method="GET" action="/blood-banks">
+
+            <div class="search-grid">
+
+                <div class="form-group">
+
+                    <label for="search">
+                        Hospital / Blood Bank Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        value="{{ request.args.get('search', '') }}"
+                        placeholder="Enter name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="type">
+                        Type
+                    </label>
+
+                    <select id="type" name="type">
+
+                        <option value="">
+                            All
+                        </option>
+
+                        <option value="Government"
+                            {% if request.args.get('type') == 'Government' %}
+                                selected
+                            {% endif %}
+                        >
+                            Government
+                        </option>
+
+                        <option value="Private"
+                            {% if request.args.get('type') == 'Private' %}
+                                selected
+                            {% endif %}
+                        >
+                            Private
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="state">
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        value="{{ request.args.get('state', '') }}"
+                        placeholder="Example: Andhra Pradesh"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="district">
+                        District
+                    </label>
+
+                    <input
+                        type="text"
+                        id="district"
+                        name="district"
+                        value="{{ request.args.get('district', '') }}"
+                        placeholder="Enter district"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value="{{ request.args.get('city', '') }}"
+                        placeholder="Enter city"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="search-button-area">
+
+                <button
+                    type="submit"
+                    class="search-btn"
+                >
+                    🔎 Search
+                </button>
+
+                <a
+                    href="/blood-banks"
+                    class="reset-btn"
+                >
+                    Reset
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= RESULTS ================= -->
+
+    <div class="summary">
+
+        <h2>
+            🏥 Available Hospitals / Blood Banks
+        </h2>
+
+        <div class="count">
+            {{ blood_banks|length }} Results
+        </div>
+
+    </div>
+
+
+    <div class="table-card">
+
+        {% if blood_banks %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>S.No</th>
+
+                        <th>
+                            Hospital / Blood Bank
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            State
+                        </th>
+
+                        <th>
+                            District
+                        </th>
+
+                        <th>
+                            City
+                        </th>
+
+                        <th>
+                            Address
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Map
+                        </th>
+
+                        <th>
+                            Blood Camp
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for bank in blood_banks %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+
+                        <td>
+                            <strong>
+                                {{ bank.name or bank.hospital_name or bank.blood_bank_name or 'Not Available' }}
+                            </strong>
+                        </td>
+
+
+                        <td>
+
+                            {% if bank.type and bank.type|lower == 'government' %}
+
+                                <span class="type-government">
+                                    Government
+                                </span>
+
+                            {% elif bank.type %}
+
+                                <span class="type-private">
+                                    {{ bank.type }}
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Not Available
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ bank.state or 'Not Available' }}
+                        </td>
+
+
+                        <td>
+                            {{ bank.district or 'Not Available' }}
+                        </td>
+
+
+                        <td>
+                            {{ bank.city or bank.town or 'Not Available' }}
+                        </td>
+
+
+                        <td>
+                            {{ bank.address or 'Not Available' }}
+                        </td>
+
+
+                        <td>
+
+                            {% if bank.phone %}
+
+                                <a
+                                    href="tel:{{ bank.phone }}"
+                                    class="phone"
+                                >
+                                    📞 {{ bank.phone }}
+                                </a>
+
+                            {% elif bank.mobile %}
+
+                                <a
+                                    href="tel:{{ bank.mobile }}"
+                                    class="phone"
+                                >
+                                    📞 {{ bank.mobile }}
+                                </a>
+
+                            {% else %}
+
+                                Not Available
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td class="email">
+
+                            {% if bank.email %}
+
+                                <a href="mailto:{{ bank.email }}">
+                                    {{ bank.email }}
+                                </a>
+
+                            {% else %}
+
+                                Not Available
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% set map_text =
+                                (bank.name or bank.hospital_name or bank.blood_bank_name or '')
+                                ~ ' ' ~
+                                (bank.address or '')
+                                ~ ' ' ~
+                                (bank.city or bank.town or '')
+                                ~ ' ' ~
+                                (bank.state or '')
+                            %}
+
+                            <a
+                                href="{{ bank.map_link or ('https://www.google.com/maps/search/?api=1&query=' ~ map_text|urlencode) }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="map-btn"
+                            >
+                                📍 Map
+                            </a>
+
+                        </td>
+
+                        <td>
+                            <a
+                                href="{{ url_for('contact', subject='Blood Camp Request', bank=bank.name or bank.hospital_name or bank.blood_bank_name or '', city=bank.city or bank.town or '', state=bank.state or '') }}"
+                                class="map-btn"
+                            >
+                                Request Camp
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+
+            <div class="no-data-icon">
+                🏥
+            </div>
+
+            <h3>
+                No Hospitals or Blood Banks Found
+            </h3>
+
+            <p>
+                Try changing the search location or search filters.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <div class="info-box">
+
+        <h3>
+            ℹ️ Blood Bank Information
+        </h3>
+
+        <ul>
+
+            <li>
+                Search hospitals and blood banks by name or location.
+            </li>
+
+            <li>
+                Use the Government / Private filter to narrow the results.
+            </li>
+
+            <li>
+                Phone numbers can be clicked to call directly from a mobile device.
+            </li>
+
+            <li>
+                The Map button opens the location in Google Maps.
+            </li>
+
+            <li>
+                Hospital and blood-bank information should be verified before
+                visiting or depending on availability.
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        🩸 <strong>Smart Blood Donor Finder</strong>
+    </p>
+
+    <p>
+        The hope of every Indian in search of a voluntary blood donor
+    </p>
+
+    <p>
+        © 2026 Smart Blood Donor Finder. All Rights Reserved.
+    </p>
+
+    <p>
+        <a href="/about">About Us</a>
+        &nbsp; | &nbsp;
+        <a href="/feedback">Feedback</a>
+        &nbsp; | &nbsp;
+        <a href="/contact">Contact Us</a>
+    </p>
+
+</footer>
+
+</body>
+</html>

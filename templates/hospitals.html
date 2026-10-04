@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospitals - Smart Blood Donor Finder</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f5f7fa; color: #333; }
+        header { background: #b30000; color: white; padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        header h1 { margin: 0; font-size: 24px; }
+        nav { display: flex; gap: 16px; }
+        nav a { color: white; font-weight: bold; text-decoration: none; }
+        main { width: 90%; max-width: 1000px; margin: 36px auto; }
+        h2 { color: #b30000; text-align: center; margin-bottom: 8px; }
+        .intro { text-align: center; color: #666; margin-bottom: 28px; }
+        .hospital-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .hospital-card { background: white; border-left: 5px solid #b30000; border-radius: 10px; padding: 20px; box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+        .hospital-card h3 { margin: 0 0 14px; color: #b30000; }
+        .hospital-card p { color: #555; margin: 9px 0; }
+        .call-button { display: inline-block; margin-top: 10px; padding: 10px 14px; border-radius: 6px; background: #b30000; color: white; text-decoration: none; font-weight: bold; }
+        @media (max-width: 750px) { .hospital-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Blood Donor Finder</h1>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/blood-request">Request Blood</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Nearby Hospitals</h2>
+        <p class="intro">Find hospitals that can help with your blood request.</p>
+        <section class="hospital-grid">
+            {% for hospital in hospitals %}
+            <article class="hospital-card">
+                <h3>{{ hospital.name }}</h3>
+                <p><strong>Location:</strong> {{ hospital.location }}</p>
+                <p><strong>Phone:</strong> {{ hospital.phone }}</p>
+                <a class="call-button" href="tel:{{ hospital.phone }}">Call Hospital</a>
+            </article>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

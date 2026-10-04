@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find a Donor | Smart Blood Donor Finder</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #b30000;
+            color: white;
+            padding: 15px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #b30000;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 35px;
+        }
+
+        .search-box h2 {
+            color: #b30000;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #444;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #b30000;
+        }
+
+        .search-btn {
+            margin-top: 22px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #b30000;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #8f0000;
+        }
+
+        /* Info */
+        .info-box {
+            background: #fff3f3;
+            border-left: 5px solid #b30000;
+            padding: 18px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+        }
+
+        .info-box h3 {
+            color: #b30000;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            line-height: 1.6;
+        }
+
+        /* Results */
+        .results-title {
+            color: #b30000;
+            margin-bottom: 20px;
+        }
+
+        .donor-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid #b30000;
+        }
+
+        .donor-card h3 {
+            color: #b30000;
+            margin-bottom: 12px;
+        }
+
+        .donor-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .detail {
+            font-size: 14px;
+        }
+
+        .detail strong {
+            color: #444;
+        }
+
+        .available {
+            display: inline-block;
+            background: #d4edda;
+            color: #155724;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: #b30000;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .contact-btn:hover {
+            background: #8f0000;
+        }
+
+        .no-results {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            color: #666;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .donor-details {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+    <div>
+        <div class="logo">🩸 Smart Blood Donor Finder</div>
+        <div class="tagline">
+            The hope of every Indian in search of a voluntary blood donor
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/find-donor">Find Donor</a>
+        <a href="/blood-banks">Blood Banks</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+</header>
+
+
+<!-- MAIN -->
+<div class="container">
+
+    <h1 class="page-title">Find a Blood Donor</h1>
+
+    <p class="subtitle">
+        Search for eligible and available blood donors near your location.
+    </p>
+
+
+    <!-- INFORMATION -->
+    <div class="info-box">
+
+        <h3>🩸 How Donor Search Works</h3>
+
+        <p>
+            Select the required blood group and enter your location.
+            The system will search registered donors based on blood group,
+            availability and location. Eligible nearby donors can then be
+            contacted for emergency blood requirements.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH FORM -->
+    <div class="search-box">
+
+        <h2>🔎 Search Donors</h2>
+
+        <form action="/find-donor" method="POST">
+
+            <div class="form-grid">
+
+                <!-- Blood Group -->
+                <div class="form-group">
+
+                    <label for="blood_group">
+                        Required Blood Group *
+                    </label>
+
+                    <select id="blood_group"
+                            name="blood_group"
+                            required>
+
+                        <option value="">-- Select Blood Group --</option>
+
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- State -->
+                <div class="form-group">
+
+                    <label for="state">
+                        State *
+                    </label>
+
+                    <select id="state"
+                            name="state"
+                            required>
+
+                        <option value="">-- Select State --</option>
+
+                        <option value="Andhra Pradesh">
+                            Andhra Pradesh
+                        </option>
+
+                        <option value="Arunachal Pradesh">
+                            Arunachal Pradesh
+                        </option>
+
+                        <option value="Assam">Assam</option>
+
+                        <option value="Bihar">Bihar</option>
+
+                        <option value="Chhattisgarh">
+                            Chhattisgarh
+                        </option>
+
+                        <option value="Delhi">Delhi</option>
+
+                        <option value="Goa">Goa</option>
+
+                        <option value="Gujarat">Gujarat</option>
+
+                        <option value="Haryana">Haryana</option>
+
+                        <option value="Himachal Pradesh">
+                            Himachal Pradesh
+                        </option>
+
+                        <option value="Jharkhand">
+                            Jharkhand
+                        </option>
+
+                        <option value="Karnataka">
+                            Karnataka
+                        </option>
+
+                        <option value="Kerala">Kerala</option>
+
+                        <option value="Madhya Pradesh">
+                            Madhya Pradesh
+                        </option>
+
+                        <option value="Maharashtra">
+                            Maharashtra
+                        </option>
+
+                        <option value="Odisha">Odisha</option>
+
+                        <option value="Punjab">Punjab</option>
+
+                        <option value="Rajasthan">Rajasthan</option>
+
+                        <option value="Tamil Nadu">
+                            Tamil Nadu
+                        </option>
+
+                        <option value="Telangana">
+                            Telangana
+                        </option>
+
+                        <option value="Uttar Pradesh">
+                            Uttar Pradesh
+                        </option>
+
+                        <option value="Uttarakhand">
+                            Uttarakhand
+                        </option>
+
+                        <option value="West Bengal">
+                            West Bengal
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- District -->
+                <div class="form-group">
+
+                    <label for="district">
+                        District *
+                    </label>
+
+                    <input type="text"
+                           id="district"
+                           name="district"
+                           placeholder="Enter district"
+                           required>
+
+                </div>
+
+
+                <!-- City -->
+                <div class="form-group">
+
+                    <label for="city">
+                        City / Town *
+                    </label>
+
+                    <input type="text"
+                           id="city"
+                           name="city"
+                           placeholder="Enter city or town"
+                           required>
+
+                </div>
+
+
+                <!-- Radius -->
+                <div class="form-group">
+
+                    <label for="radius">
+                        Search Radius
+                    </label>
+
+                    <select id="radius"
+                            name="radius">
+
+                        <option value="5">Within 5 km</option>
+                        <option value="10" selected>
+                            Within 10 km
+                        </option>
+                        <option value="25">
+                            Within 25 km
+                        </option>
+                        <option value="50">
+                            Within 50 km
+                        </option>
+                        <option value="100">
+                            Within 100 km
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Units -->
+                <div class="form-group">
+
+                    <label for="units">
+                        Required Units
+                    </label>
+
+                    <input type="number"
+                           id="units"
+                           name="units"
+                           min="1"
+                           max="20"
+                           value="1"
+                           placeholder="Enter required units">
+
+                </div>
+
+
+                <!-- Emergency -->
+                <div class="form-group full">
+
+                    <label for="emergency">
+                        Emergency Level
+                    </label>
+
+                    <select id="emergency"
+                            name="emergency">
+
+                        <option value="Normal">
+                            Normal
+                        </option>
+
+                        <option value="Urgent">
+                            Urgent
+                        </option>
+
+                        <option value="Emergency">
+                            Emergency
+                        </option>
+
+                        <option value="Critical">
+                            Critical
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="search-btn">
+                🔎 Find Available Donors
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- SEARCH RESULTS -->
+
+    {% if donors %}
+
+        <h2 class="results-title">
+            🩸 Available Registered Donors
+        </h2>
+
+
+        {% for donor in donors %}
+
+        <div class="donor-card">
+
+            <h3>
+                {{ donor.full_name }}
+            </h3>
+
+            <div class="donor-details">
+
+                <div class="detail">
+                    <strong>Blood Group:</strong>
+                    {{ donor.blood_group }}
+                </div>
+
+                <div class="detail">
+                    <strong>Location:</strong>
+                    {{ donor.city }}, {{ donor.district }}
+                </div>
+
+                <div class="detail">
+                    <strong>State:</strong>
+                    {{ donor.state }}
+                </div>
+
+                <div class="detail">
+                    <strong>Mobile:</strong>
+                    {{ donor.mobile }}
+                </div>
+
+                <div class="detail">
+                    <strong>Email:</strong>
+                    {{ donor.email }}
+                </div>
+
+                <div class="detail">
+                    <strong>Availability:</strong>
+                    <span class="available">{{ donor.availability or 'Available' }}</span>
+                </div>
+
+                <div class="detail">
+                    <strong>Last Donation:</strong>
+                    {{ donor.last_donation_date or 'Not provided' }}
+                </div>
+
+            </div>
+
+
+            <a href="tel:{{ donor.mobile }}"
+               class="contact-btn">
+                📞 Contact Donor
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% elif request.method == "POST" %}
+
+        <div class="no-results">
+
+            <h3>😔 No Donors Found</h3>
+
+            <p>
+                No matching donors were found for the selected
+                blood group and location.
+            </p>
+
+            <p style="margin-top:10px;">
+                Try increasing the search radius or searching
+                in a nearby city.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <p>
+        🩸 Smart Blood Donor Finder
+    </p>
+
+    <p>
+        The hope of every Indian in search of a voluntary blood donor
+    </p>
+
+    <p>
+        © 2026 Smart Blood Donor Finder. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+    // Prevent invalid units
+    document.querySelector("form").addEventListener("submit", function(event) {
+
+        const units = document.getElementById("units").value;
+
+        if (units && (units < 1 || units > 20)) {
+
+            alert("Please enter required units between 1 and 20.");
+
+            event.preventDefault();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register as Donor | Smart Blood Donor Finder</title>
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #b30000;
+            color: white;
+            padding: 16px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main */
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .title {
+            text-align: center;
+            color: #b30000;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: #b30000;
+            font-size: 20px;
+            margin: 25px 0 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #444;
+        }
+
+        .required {
+            color: red;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #b30000;
+            box-shadow: 0 0 3px rgba(179,0,0,0.2);
+        }
+
+        /* Availability */
+        .availability-box {
+            background: #fff7f7;
+            padding: 18px;
+            border-radius: 8px;
+            border: 1px solid #f0cccc;
+        }
+
+        .availability-box p {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        /* Checkbox */
+        .confirm-box {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .confirm-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .confirm-label input {
+            width: auto;
+            margin-top: 4px;
+        }
+
+        /* CAPTCHA */
+        .captcha-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .captcha-question {
+            font-size: 18px;
+            font-weight: bold;
+            color: #b30000;
+            margin-bottom: 10px;
+        }
+
+        .captcha-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .captcha-row input {
+            max-width: 250px;
+        }
+
+        /* Button */
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 25px;
+            background: #b30000;
+            border: none;
+            border-radius: 7px;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background: #8f0000;
+        }
+
+        .register-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        /* Login */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #b30000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Messages */
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+
+            .captcha-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div>
+        <div class="logo">
+            🩸 Smart Blood Donor Finder
+        </div>
+
+        <div class="tagline">
+            The hope of every Indian in search of a voluntary blood donor
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/find-donor">Find Donor</a>
+        <a href="/about">About Us</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/login">Login</a>
+    </nav>
+
+</header>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+    <h1 class="title">
+        Register as a Blood Donor
+    </h1>
+
+    <p class="subtitle">
+        Become a voluntary blood donor and help save lives.
+    </p>
+
+
+    <div class="form-card">
+
+        <!-- Messages -->
+
+        <div id="successMessage" class="message success"></div>
+
+        <div id="errorMessage" class="message error"></div>
+
+
+        <form id="registerForm" action="/register" method="POST">
+
+            <!-- PERSONAL INFORMATION -->
+
+            <h2 class="section-title">
+                👤 Personal Information
+            </h2>
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+
+                    <label for="full_name">
+                        Full Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="full_name"
+                        name="full_name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="blood_group">
+                        Blood Group <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="blood_group"
+                        name="blood_group"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select Blood Group --
+                        </option>
+
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="mobile">
+                        Mobile Number <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        name="mobile"
+                        placeholder="Enter 10-digit mobile number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email ID <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@gmail.com"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <h2 class="section-title">
+                📍 Location Information
+            </h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="country">
+                        Country <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="country"
+                        name="country"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select Country --
+                        </option>
+
+                        <option value="India" selected>
+                            India
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="state">
+                        State <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="state"
+                        name="state"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select State --
+                        </option>
+
+                        <option value="Andhra Pradesh">
+                            Andhra Pradesh
+                        </option>
+
+                        <option value="Arunachal Pradesh">
+                            Arunachal Pradesh
+                        </option>
+
+                        <option value="Assam">
+                            Assam
+                        </option>
+
+                        <option value="Bihar">
+                            Bihar
+                        </option>
+
+                        <option value="Chhattisgarh">
+                            Chhattisgarh
+                        </option>
+
+                        <option value="Delhi">
+                            Delhi
+                        </option>
+
+                        <option value="Goa">
+                            Goa
+                        </option>
+
+                        <option value="Gujarat">
+                            Gujarat
+                        </option>
+
+                        <option value="Haryana">
+                            Haryana
+                        </option>
+
+                        <option value="Himachal Pradesh">
+                            Himachal Pradesh
+                        </option>
+
+                        <option value="Jharkhand">
+                            Jharkhand
+                        </option>
+
+                        <option value="Karnataka">
+                            Karnataka
+                        </option>
+
+                        <option value="Kerala">
+                            Kerala
+                        </option>
+
+                        <option value="Madhya Pradesh">
+                            Madhya Pradesh
+                        </option>
+
+                        <option value="Maharashtra">
+                            Maharashtra
+                        </option>
+
+                        <option value="Odisha">
+                            Odisha
+                        </option>
+
+                        <option value="Punjab">
+                            Punjab
+                        </option>
+
+                        <option value="Rajasthan">
+                            Rajasthan
+                        </option>
+
+                        <option value="Tamil Nadu">
+                            Tamil Nadu
+                        </option>
+
+                        <option value="Telangana">
+                            Telangana
+                        </option>
+
+                        <option value="Uttar Pradesh">
+                            Uttar Pradesh
+                        </option>
+
+                        <option value="Uttarakhand">
+                            Uttarakhand
+                        </option>
+
+                        <option value="West Bengal">
+                            West Bengal
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="district">
+                        District <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="district"
+                        name="district"
+                        placeholder="Enter district"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="city">
+                        City / Town <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="Enter city or town"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN INFORMATION -->
+
+            <h2 class="section-title">
+                🔐 Account Information
+            </h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="user_id">
+                        User ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="user_id"
+                        name="user_id"
+                        placeholder="Enter preferred user ID"
+                    >
+
+                </div>
+
+
+                <div></div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Re-type Password <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        placeholder="Re-enter password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- AVAILABILITY -->
+
+            <h2 class="section-title">
+                🩸 Blood Donation Availability
+            </h2>
+
+            <div class="availability-box">
+
+                <p>
+                    Please confirm your availability to donate blood:
+                </p>
+
+                <div class="radio-group">
+
+                    <label class="radio-option">
+
+                        <input
+                            type="radio"
+                            name="availability"
+                            value="Available"
+                            required
+                        >
+
+                        🟢 Available
+
+                    </label>
+
+
+                    <label class="radio-option">
+
+                        <input
+                            type="radio"
+                            name="availability"
+                            value="Not Available"
+                        >
+
+                        🔴 Not Available
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- CAPTCHA -->
+
+            <div class="captcha-box">
+
+                <div class="captcha-question">
+                    🔐 CAPTCHA: <span id="captchaQuestion"></span>
+                </div>
+
+                <div class="captcha-row">
+
+                    <input
+                        type="number"
+                        id="captchaAnswer"
+                        placeholder="Enter answer"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        onclick="generateCaptcha()"
+                        style="
+                            padding:12px 18px;
+                            border:none;
+                            border-radius:6px;
+                            background:#555;
+                            color:white;
+                            cursor:pointer;
+                        "
+                    >
+                        🔄 New CAPTCHA
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRMATION -->
+
+            <div class="confirm-box">
+
+                <label class="confirm-label">
+
+                    <input
+                        type="checkbox"
+                        id="confirmData"
+                        required
+                    >
+
+                    <span>
+                        I confirm that all the information provided by me
+                        is correct and I agree to be contacted for
+                        blood donation requests.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- REGISTER -->
+
+            <button
+                type="submit"
+                id="registerButton"
+                class="register-btn"
+            >
+                🩸 Register as Donor
+            </button>
+
+
+            <div class="login-link">
+
+                Already registered?
+
+                <a href="/login">
+                    Login here
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        🩸 Smart Blood Donor Finder
+    </p>
+
+    <p>
+        The hope of every Indian in search of a voluntary blood donor
+    </p>
+
+    <p>
+        © 2026 Smart Blood Donor Finder. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+    // ==========================================
+    // Client-side validation
+    // ==========================================
+
+    let captchaNumber1;
+    let captchaNumber2;
+    let captchaAnswer;
+
+
+    function generateCaptcha() {
+
+        captchaNumber1 =
+            Math.floor(Math.random() * 9) + 1;
+
+        captchaNumber2 =
+            Math.floor(Math.random() * 9) + 1;
+
+        captchaAnswer =
+            captchaNumber1 + captchaNumber2;
+
+        document.getElementById(
+            "captchaQuestion"
+        ).textContent =
+            captchaNumber1 + " + " + captchaNumber2 + " = ?";
+
+        document.getElementById(
+            "captchaAnswer"
+        ).value = "";
+
+    }
+
+
+    // Generate CAPTCHA when page loads
+
+    generateCaptcha();
+
+
+    // ==========================================
+    // SHOW MESSAGE
+    // ==========================================
+
+    function showError(message) {
+
+        const error =
+            document.getElementById("errorMessage");
+
+        const success =
+            document.getElementById("successMessage");
+
+        success.style.display = "none";
+
+        error.textContent = message;
+
+        error.style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    function showSuccess(message) {
+
+        const error =
+            document.getElementById("errorMessage");
+
+        const success =
+            document.getElementById("successMessage");
+
+        error.style.display = "none";
+
+        success.textContent = message;
+
+        success.style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    // ==========================================
+    // REGISTRATION
+    // ==========================================
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+            this.submit();
+            return;
+
+
+            const registerButton =
+                document.getElementById("registerButton");
+
+            const fullName =
+                document.getElementById("full_name").value.trim();
+
+            const bloodGroup =
+                document.getElementById("blood_group").value;
+
+            const mobile =
+                document.getElementById("mobile").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const country =
+                document.getElementById("country").value;
+
+            const state =
+                document.getElementById("state").value;
+
+            const district =
+                document.getElementById("district").value.trim();
+
+            const city =
+                document.getElementById("city").value.trim();
+
+            const userId =
+                document.getElementById("user_id").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirm_password").value;
+
+            const availability =
+                document.querySelector(
+                    'input[name="availability"]:checked'
+                )?.value;
+
+
+            // ==================================
+            // VALIDATION
+            // ==================================
+
+            if (password !== confirmPassword) {
+
+                showError(
+                    "Passwords do not match."
+                );
+
+                return;
+            }
+
+
+            if (mobile.length !== 10 ||
+                !/^[0-9]+$/.test(mobile)) {
+
+                showError(
+                    "Please enter a valid 10-digit mobile number."
+                );
+
+                return;
+            }
+
+
+            const enteredCaptcha =
+                parseInt(
+                    document.getElementById("captchaAnswer").value
+                );
+
+
+            if (enteredCaptcha !== captchaAnswer) {
+
+                showError(
+                    "Incorrect CAPTCHA. Please try again."
+                );
+
+                generateCaptcha();
+
+                return;
+            }
+
+
+            if (!availability) {
+
+                showError(
+                    "Please select your blood donation availability."
+                );
+
+                return;
+            }
+
+
+            // ==================================
+            // DISABLE BUTTON
+            // ==================================
+
+            registerButton.disabled = true;
+
+            registerButton.textContent =
+                "Creating Account...";
+
+
+            try {
+
+                // ==================================
+                // Account creation is handled by Flask and MySQL.
+                // ==================================
+
+                // ==================================
+                // SEND PROFILE TO FLASK
+                // ==================================
+
+                const response =
+                    await fetch(
+                        "/register-profile",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                full_name: fullName,
+
+                                blood_group: bloodGroup,
+
+                                mobile: mobile,
+
+                                email: email,
+
+                                country: country,
+
+                                state: state,
+
+                                district: district,
+
+                                city: city,
+
+                                user_id: userId,
+
+                                availability: availability
+
+                            })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.error ||
+                        "Unable to save donor information."
+                    );
+
+                }
+
+
+                // ==================================
+                // SUCCESS
+                // ==================================
+
+                showSuccess(
+                    "Registration successful! Redirecting to login..."
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "/login";
+
+                }, 1500);
+
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                let message =
+                    "Registration failed. Please try again.";
+
+
+                if (error.message) {
+
+                    message =
+                        error.message;
+
+                }
+
+
+                showError(message);
+
+
+                registerButton.disabled = false;
+
+                registerButton.textContent =
+                    "🩸 Register as Donor";
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

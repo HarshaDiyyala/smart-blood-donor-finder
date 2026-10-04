@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Us | Smart Blood Donor Finder</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #b71c1c;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+
+        /* ================= PAGE TITLE ================= */
+
+        .page-title {
+            text-align: center;
+            color: #b71c1c;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #666;
+            font-size: 17px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+
+        /* ================= CARDS ================= */
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.10);
+        }
+
+        .card h2 {
+            color: #b71c1c;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .card h3 {
+            color: #c62828;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            margin-bottom: 12px;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #b71c1c,
+                #e53935
+            );
+
+            color: white;
+
+            padding: 45px 35px;
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            max-width: 850px;
+            margin: auto;
+        }
+
+
+        /* ================= VISION MISSION ================= */
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .vision,
+        .mission {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.10);
+        }
+
+        .vision h2,
+        .mission h2 {
+            color: #b71c1c;
+            margin-bottom: 12px;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .feature {
+            background: #fff;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            border: 1px solid #eee;
+
+            text-align: center;
+
+            transition: 0.2s;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .feature h3 {
+            color: #b71c1c;
+            margin-bottom: 8px;
+        }
+
+
+        /* ================= TEAM ================= */
+
+        .team-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .team-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            border: 1px solid #eee;
+        }
+
+        .team-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 15px;
+
+            background: #ffebee;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+        }
+
+        .team-card h3 {
+            color: #b71c1c;
+            margin-bottom: 5px;
+        }
+
+        .team-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+
+        /* ================= PROJECT STATUS ================= */
+
+        .status-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .status-box {
+            padding: 25px;
+
+            border-radius: 12px;
+
+            border: 1px solid #eee;
+
+            background: white;
+        }
+
+        .status-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .completed {
+            border-left: 5px solid #2e7d32;
+        }
+
+        .progress {
+            border-left: 5px solid #f57c00;
+        }
+
+
+        /* ================= LIST ================= */
+
+        ul {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+
+        /* ================= CONTACT BUTTON ================= */
+
+        .contact-button {
+            display: inline-block;
+
+            background: #c62828;
+
+            color: white;
+
+            padding: 13px 25px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+        }
+
+        .contact-button:hover {
+            background: #8e0000;
+        }
+
+
+        /* ================= DISCLAIMER ================= */
+
+        .disclaimer {
+            background: #fff3cd;
+
+            border-left: 5px solid #ffc107;
+
+            padding: 20px;
+
+            border-radius: 8px;
+        }
+
+        .disclaimer h2 {
+            color: #856404;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #212121;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 50px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .feature-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <h1>
+        🩸 Smart Blood Donor Finder
+    </h1>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/find-donor">
+            Find Donor
+        </a>
+
+        <a href="/blood-banks">
+            Blood Banks
+        </a>
+
+        <a href="/feedback" >
+            Feedback
+        </a>
+
+        <a href="/contact">
+            Contact
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- TITLE -->
+
+    <h1 class="page-title">
+        About Us
+    </h1>
+
+    <p class="tagline">
+        "The hope of every Indian in search of a voluntary blood donor"
+    </p>
+
+
+
+    <!-- ================= HERO ================= -->
+
+    <div class="hero">
+
+        <h2>
+            🩸 Smart Blood Donor Finder
+        </h2>
+
+        <p>
+
+            Smart Blood Donor Finder is an AI-powered platform
+            designed to help connect blood donors with patients,
+            hospitals and blood banks during normal and emergency
+            blood requirements.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= ABOUT PROJECT ================= -->
+
+    <div class="card">
+
+        <h2>
+            📖 About the Project
+        </h2>
+
+        <p>
+
+            The Smart Blood Donor Finder is a technology-based application developed to make the process of finding and connecting with blood donors faster, easier, and more efficient. Blood is one of the most important requirements in medical emergencies, accidents, surgeries, childbirth, and treatment of several diseases. In many emergency situations, patients and their families face difficulties in finding the required blood group at the right time. Traditional methods of searching for blood donors often depend on phone calls, personal contacts, social media posts, or visiting blood banks and hospitals. These methods can consume valuable time, especially when immediate blood is required. The Smart Blood Donor Finder aims to address this problem by providing a centralized digital platform that connects people who need blood with potential donors.
+</p>
+<p>The main purpose of this project is to create a simple and user-friendly system where blood donors can register their information and people who require blood can search for suitable donors based on their requirements. A donor can provide details such as name, age, blood group, contact information, location, and availability. A person searching for blood can enter the required blood group and preferred location. The system can then display potential donors who match the given requirements. This makes the process of identifying a potential donor more organized and reduces the time spent searching for blood.
+</p>
+<p>The project focuses on improving communication between blood donors and blood recipients. When a person requires blood, they may not know anyone with the same blood group. In such situations, the Smart Blood Donor Finder can provide a convenient way to discover registered potential donors. Instead of depending completely on personal networks, users can use the application to search through available donor information. The system can also provide contact details or an appropriate communication method so that the blood seeker can contact the potential donor and coordinate with a hospital or blood bank.
+</p>
+<p>One of the important features of the project is blood group-based searching. Blood groups such as A+, A-, B+, B-, AB+, AB-, O+, and O- have different compatibility requirements. Therefore, identifying the appropriate blood group is an important part of the blood donation process. The application can allow users to select the required blood group and find registered donors associated with that group. The system can also include location-based searching so that users can find potential donors who are geographically closer to them. This can be particularly useful during emergencies because nearby donors may be easier to contact and coordinate with.
+</p>
+<p>The application can contain separate functionalities for donors and blood seekers. Donors can create an account and maintain their profiles by entering relevant information. They can also update their availability when they are willing or unable to donate. Blood seekers can register or access the search functionality and provide the required blood group and location. An administrator can manage the system, verify or maintain user information, monitor donor records, and manage inappropriate or outdated information. These features help maintain an organized database and improve the overall usability of the platform.
+</p>
+<p>Another important objective of the Smart Blood Donor Finder is to maintain accurate and updated donor information. Donor availability can change over time, so allowing donors to update their status can help reduce unnecessary calls or unsuccessful searches. The system can provide options such as available, temporarily unavailable, or inactive, depending on the requirements of the project. Maintaining updated information makes the platform more useful for people searching for potential donors.
+</p>
+<P>The project also aims to improve awareness and participation in blood donation. Many people are willing to donate blood but may not know when or where their donation can help someone. A digital platform can make it easier for donors to register and become part of a community of potential blood donors. The system can encourage voluntary blood donation by providing information about the importance of blood donation and helping donors connect with legitimate requests.
+</P>
+<p>The Smart Blood Donor Finder can be developed using modern web or mobile application technologies. A typical implementation may include a frontend interface, a backend application, and a database. The frontend provides screens for registration, login, donor profiles, blood group selection, searching, and contacting potential donors. The backend handles user authentication, donor management, search operations, and other application logic. The database stores donor and user information in an organized manner. Depending on the project requirements, technologies such as HTML, CSS, JavaScript, React, Java, Python, PHP, Node.js, MySQL, or other suitable technologies can be used.
+</p>
+<p>Security and privacy are also important considerations in this project. Since the system may contain personal information such as names, contact details, and locations, access to this information should be handled carefully. Authentication mechanisms can be implemented to prevent unauthorized access. Only necessary information should be displayed to users, and sensitive information should be protected. The application should also clearly communicate that donor matching through the platform does not replace medical advice or official blood-bank procedures. Actual donation eligibility, compatibility, screening, and transfusion decisions must be handled by qualified medical professionals and authorized blood banks or hospitals.
+</p>
+<p>The proposed system can be especially useful for hospitals, patients, voluntary donors, blood banks, and emergency support organizations. In the future, the project can be expanded with additional features such as notifications, OTP-based verification, donor eligibility reminders, emergency alerts, hospital integration, blood-bank availability, map-based donor discovery, and multilingual support. Artificial intelligence or intelligent matching techniques could also be explored to improve search and communication while maintaining appropriate privacy and safety controls.
+</p>
+<p>Overall, the Smart Blood Donor Finder is designed to use technology to make blood-donor discovery more organized and accessible. By maintaining a centralized donor database and providing blood-group and location-based search capabilities, the system can help users identify potential donors more efficiently. The project demonstrates how software technology can be applied to support emergency communication and voluntary blood donation. Its ultimate goal is to provide a convenient digital platform that helps connect people seeking blood with potential donors while encouraging responsible and voluntary participation in blood donation.
+            </p>
+
+        </div>
+
+
+
+        <div class="mission">
+
+            <h2>
+                🎯 Our Mission
+            </h2>
+
+            <p>
+
+                To use technology, intelligent donor matching and
+                digital communication to reduce the time required
+                to connect patients and hospitals with eligible
+                blood donors.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <div class="card">
+
+        <h2>
+            ⚙️ What Our Platform Provides
+        </h2>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🩸
+                </div>
+
+                <h3>
+                    Donor Registration
+                </h3>
+
+                <p>
+                    Donors can create profiles with their blood
+                    group, location and availability.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    Smart Donor Matching
+                </h3>
+
+                <p>
+                    The platform can identify suitable donors
+                    using blood group, eligibility and location.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Emergency Requests
+                </h3>
+
+                <p>
+                    Patients and hospitals can create blood
+                    requests based on their requirements.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🏥
+                </div>
+
+                <h3>
+                    Blood Banks
+                </h3>
+
+                <p>
+                    Users can find information about available
+                    blood banks and their locations.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📍
+                </div>
+
+                <h3>
+                    Location Support
+                </h3>
+
+                <p>
+                    Location information can help identify donors
+                    closer to the required hospital.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📢
+                </div>
+
+                <h3>
+                    Notifications
+                </h3>
+
+                <p>
+                    Future versions can support SMS, WhatsApp,
+                    email and push notifications.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOUNDERS ================= -->
+
+    <div class="card">
+
+        <h2>
+            👥 Founders
+        </h2>
+
+        <p>
+
+            The Smart Blood Donor Finder project is developed
+            with the goal of applying technology to a real-world
+            healthcare and social-service problem.
+
+        </p>
+
+
+        <div class="team-grid">
+
+
+            <div class="team-card">
+
+                <div class="team-icon">
+                    👨‍💻
+                </div>
+
+                <h3>
+                    Project Founder
+                </h3>
+
+                <p>
+                    Smart Blood Donor Finder Project Team
+                </p>
+
+                <p>
+                    📧 Project Email
+                </p>
+
+                <p>
+                    📍 India
+                </p>
+
+            </div>
+
+
+
+            <div class="team-card">
+
+                <div class="team-icon">
+                    👨‍💻
+                </div>
+
+                <h3>
+                    Development Team
+                </h3>
+
+                <p>
+                    Software Development and Integration
+                </p>
+
+                <p>
+                    🌐 Web Platform
+                </p>
+
+            </div>
+
+
+
+            <div class="team-card">
+
+                <div class="team-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    Volunteer Team
+                </h3>
+
+                <p>
+                    Community Support and Blood Donation
+                    Awareness
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= CAMPAIGN TEAM ================= -->
+
+    <div class="card">
+
+        <h2>
+            📢 Campaign Team
+        </h2>
+
+        <p>
+
+            The campaign team focuses on creating awareness about
+            voluntary blood donation and encouraging eligible
+            people to participate in blood donation activities.
+
+        </p>
+
+        <ul>
+
+            <li>
+                Blood donation awareness campaigns
+            </li>
+
+            <li>
+                Donor registration drives
+            </li>
+
+            <li>
+                Emergency blood requirement awareness
+            </li>
+
+            <li>
+                Community outreach programs
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= FIELD VOLUNTEERS ================= -->
+
+    <div class="card">
+
+        <h2>
+            🤝 Field Volunteers
+        </h2>
+
+        <p>
+
+            Field volunteers can support the platform by helping
+            communities understand voluntary blood donation and
+            by assisting users with platform-related information.
+
+        </p>
+
+        <ul>
+
+            <li>
+                Donor awareness
+            </li>
+
+            <li>
+                Community coordination
+            </li>
+
+            <li>
+                Blood donation event support
+            </li>
+
+            <li>
+                Emergency communication support
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= TECHNICAL TEAM ================= -->
+
+    <div class="card">
+
+        <h2>
+            💻 Technical Team
+        </h2>
+
+        <p>
+            The technical team is responsible for developing
+            and maintaining the digital platform.
+        </p>
+
+        <ul>
+
+            <li>
+                Python / Flask backend development
+            </li>
+
+            <li>
+                HTML, CSS and JavaScript frontend
+            </li>
+
+            <li>
+                Firebase Authentication
+            </li>
+
+            <li>
+                SQLite database development
+            </li>
+
+            <li>
+                Smart donor matching
+            </li>
+
+            <li>
+                Website security and maintenance
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= CONTRIBUTIONS ================= -->
+
+    <div class="card">
+
+        <h2>
+            🌟 Contributions
+        </h2>
+
+        <p>
+            The project focuses on making blood donor discovery
+            easier through technology.
+        </p>
+
+        <ul>
+
+            <li>
+                Connecting donors and blood seekers
+            </li>
+
+            <li>
+                Improving emergency request management
+            </li>
+
+            <li>
+                Organizing donor information
+            </li>
+
+            <li>
+                Supporting blood bank discovery
+            </li>
+
+            <li>
+                Promoting voluntary blood donation
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= ACHIEVEMENTS ================= -->
+
+    <div class="card">
+
+        <h2>
+            🏆 Achievements
+        </h2>
+
+        <ul>
+
+            <li>
+                Development of the Smart Blood Donor Finder
+                prototype
+            </li>
+
+            <li>
+                Implementation of donor registration
+            </li>
+
+            <li>
+                Firebase-based authentication integration
+            </li>
+
+            <li>
+                Blood request management
+            </li>
+
+            <li>
+                Donor matching concept implementation
+            </li>
+
+            <li>
+                Blood bank information support
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= PRESS COVERAGE ================= -->
+
+    <div class="card">
+
+        <h2>
+            📰 Press Coverage
+        </h2>
+
+        <p>
+
+            Press coverage and media information can be added here
+            as the project receives recognition through college
+            exhibitions, project demonstrations, social initiatives
+            or community events.
+
+        </p>
+
+        <p>
+            <strong>
+                Current Status:
+            </strong>
+            Information will be updated when official coverage
+            becomes available.
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= PROJECT STATUS ================= -->
+
+    <div class="card">
+
+        <h2>
+            🚀 Projects
+        </h2>
+
+
+        <div class="status-grid">
+
+
+            <div class="status-box completed">
+
+                <h3>
+                    ✅ Completed
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Donor registration
+                    </li>
+
+                    <li>
+                        Firebase authentication
+                    </li>
+
+                    <li>
+                        User dashboard
+                    </li>
+
+                    <li>
+                        Blood request interface
+                    </li>
+
+                    <li>
+                        Feedback and contact pages
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <div class="status-box progress">
+
+                <h3>
+                    🔄 In Progress / Future Development
+                </h3>
+
+                <ul>
+
+                    <li>
+                        GPS-based donor matching
+                    </li>
+
+                    <li>
+                        SMS notifications
+                    </li>
+
+                    <li>
+                        WhatsApp notifications
+                    </li>
+
+                    <li>
+                        Push notifications
+                    </li>
+
+                    <li>
+                        Mobile application
+                    </li>
+
+                    <li>
+                        ML-based blood demand prediction
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= DISCLAIMER ================= -->
+
+    <div class="card disclaimer">
+
+        <h2>
+            ⚠️ Disclaimer
+        </h2>
+
+        <p>
+
+            Smart Blood Donor Finder is a technology platform
+            intended to help connect blood donors, patients,
+            hospitals and blood banks.
+
+        </p>
+
+        <p>
+
+            The platform does not replace medical professionals,
+            hospitals, blood banks or official medical procedures.
+
+        </p>
+
+        <p>
+
+            Users should verify blood availability, donor
+            eligibility and medical requirements with the
+            appropriate hospital or blood bank before proceeding.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= PRIVACY ================= -->
+
+    <div class="card">
+
+        <h2>
+            🔐 Privacy & Data
+        </h2>
+
+        <p>
+
+            User information should be handled responsibly and
+            only used for purposes related to blood donation,
+            emergency blood requests and platform services.
+
+        </p>
+
+        <p>
+
+            Users should avoid sharing unnecessary sensitive
+            personal information through public sections of
+            the platform.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <div class="card">
+
+        <h2>
+            📞 Contact Us
+        </h2>
+
+        <p>
+
+            Have a question, suggestion or want to support the
+            project?
+
+        </p>
+
+        <a
+            href="/contact"
+            class="contact-button"
+        >
+            Contact Our Team
+        </a>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 Smart Blood Donor Finder
+    </p>
+
+    <p>
+        The hope of every Indian in search of a voluntary blood donor.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

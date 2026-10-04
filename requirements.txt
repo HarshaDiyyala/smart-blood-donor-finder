@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+firebase-admin
+pandas
+openpyxl
+pymysql

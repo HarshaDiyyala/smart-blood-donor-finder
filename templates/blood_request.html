@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blood Request | Smart Blood Donor Finder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #c62828;
+            color: white;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 11px;
+            margin-top: 3px;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .logout-btn {
+            background: white;
+            color: #c62828 !important;
+            font-weight: bold;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #c62828;
+            font-size: 32px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* ================= EMERGENCY NOTICE ================= */
+
+        .emergency-notice {
+            background: #fff3f3;
+            border: 2px solid #ef9a9a;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 25px;
+        }
+
+        .emergency-notice h3 {
+            color: #b71c1c;
+            margin-bottom: 8px;
+        }
+
+        .emergency-notice p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #c62828;
+            font-size: 21px;
+            border-bottom: 2px solid #ffebee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        label span {
+            color: #d32f2f;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #c62828;
+            box-shadow: 0 0 0 3px rgba(198,40,40,0.08);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        /* ================= EMERGENCY LEVEL ================= */
+
+        .emergency-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .emergency-option {
+            position: relative;
+        }
+
+        .emergency-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .emergency-option label {
+            display: block;
+            text-align: center;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .emergency-option input:checked + label {
+            border-color: #c62828;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* ================= CHECKBOX ================= */
+
+        .confirmation {
+            background: #fafafa;
+            border: 1px solid #eee;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .confirmation label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-weight: normal;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .confirmation input {
+            width: auto;
+            margin-top: 3px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .button-area {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .submit-btn {
+            border: none;
+            background: #c62828;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #a91f1f;
+            transform: translateY(-1px);
+        }
+
+        .cancel-btn {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 13px 28px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            color: #555;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin-top: 25px;
+            background: #f3f7ff;
+            border: 1px solid #c5d7f5;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .info-box h3 {
+            color: #2455a4;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #ff8a80;
+            text-decoration: none;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 850px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .emergency-options {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .page-title {
+                font-size: 26px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 7px 8px;
+            }
+
+            .submit-btn,
+            .cancel-btn {
+                display: block;
+                width: 100%;
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div>
+        <div class="logo">
+            🩸 Smart Blood Donor Finder
+        </div>
+
+        <div class="tagline">
+            The hope of every Indian in search of a voluntary blood donor
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/find-donor">Find Donor</a>
+        <a href="/request-details">Blood Request</a>
+        <a href="/blood-banks">Blood Banks</a>
+        <a href="/about">About Us</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </nav>
+
+</header>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container">
+
+    <h1 class="page-title">
+        🩸 Blood Request
+    </h1>
+
+    <p class="page-subtitle">
+        Create a blood request and help us connect you with
+        suitable donors and nearby blood banks.
+    </p>
+
+
+    <!-- ================= EMERGENCY NOTICE ================= -->
+
+    <div class="emergency-notice">
+
+        <h3>
+            🚨 Emergency Blood Requirement
+        </h3>
+
+        <p>
+            Please provide accurate information below.
+            Emergency requests may be prioritized by the
+            Smart Blood Donor Finder system.
+        </p>
+
+    </div>
+
+
+    <!-- ================= FORM ================= -->
+
+    <div class="form-card">
+
+        <form
+            action="/blood-request"
+            method="POST"
+            id="bloodRequestForm"
+        >
+
+
+            <!-- ================= PATIENT DETAILS ================= -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    👤 Patient Details
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="patient_name">
+                            Patient Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patient_name"
+                            name="patient_name"
+                            placeholder="Enter patient's full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Patient Age <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            min="1"
+                            max="120"
+                            placeholder="Enter age"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="gender">
+                            Gender <span>*</span>
+                        </label>
+
+                        <select
+                            id="gender"
+                            name="gender"
+                            required
+                        >
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="contact">
+                            Contact Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="contact"
+                            name="contact"
+                            placeholder="Enter contact number"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            required
+                        >
+
+                        <div class="help-text">
+                            Enter a valid 10-digit mobile number.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BLOOD REQUIREMENT ================= -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    🩸 Blood Requirement
+                </h2>
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="blood_group">
+                            Required Blood Group <span>*</span>
+                        </label>
+
+                        <select
+                            id="blood_group"
+                            name="blood_group"
+                            required
+                        >
+
+                            <option value="">
+                                Select Blood Group
+                            </option>
+
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="required_units">
+                            Required Units <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="required_units"
+                            name="required_units"
+                            min="1"
+                            max="20"
+                            placeholder="Example: 2"
+                            required
+                        >
+
+                        <div class="help-text">
+                            Enter the number of blood units required.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= EMERGENCY LEVEL ================= -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    🚨 Emergency Level
+                </h2>
+
+                <div class="emergency-options">
+
+
+                    <div class="emergency-option">
+
+                        <input
+                            type="radio"
+                            id="normal"
+                            name="emergency_level"
+                            value="Normal"
+                            required
+                        >
+
+                        <label for="normal">
+                            🟢 Normal
+                        </label>
+
+                    </div>
+
+
+                    <div class="emergency-option">
+
+                        <input
+                            type="radio"
+                            id="urgent"
+                            name="emergency_level"
+                            value="Urgent"
+                        >
+
+                        <label for="urgent">
+                            🟠 Urgent
+                        </label>
+
+                    </div>
+
+
+                    <div class="emergency-option">
+
+                        <input
+                            type="radio"
+                            id="critical"
+                            name="emergency_level"
+                            value="Critical"
+                        >
+
+                        <label for="critical">
+                            🔴 Critical
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= HOSPITAL DETAILS ================= -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    🏥 Hospital Details
+                </h2>
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full-width">
+
+                        <label for="hospital_name">
+                            Hospital Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="hospital_name"
+                            name="hospital_name"
+                            placeholder="Enter hospital name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="state">
+                            State <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="state"
+                            name="state"
+                            placeholder="Example: Andhra Pradesh"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="district">
+                            District <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="district"
+                            name="district"
+                            placeholder="Enter district"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="city">
+                            City / Town <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            placeholder="Enter city or town"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="pincode">
+                            PIN Code <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="pincode"
+                            name="pincode"
+                            placeholder="Enter 6-digit PIN code"
+                            pattern="[0-9]{6}"
+                            maxlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="hospital_address">
+                            Complete Hospital Address <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="hospital_address"
+                            name="hospital_address"
+                            placeholder="Enter complete hospital address"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ADDITIONAL MESSAGE ================= -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    📝 Additional Information
+                </h2>
+
+                <div class="form-group">
+
+                    <label for="additional_message">
+                        Additional Message
+                    </label>
+
+                    <textarea
+                        id="additional_message"
+                        name="additional_message"
+                        placeholder="Enter any additional information about the blood requirement..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CONFIRMATION ================= -->
+
+            <div class="confirmation">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="confirmation"
+                        name="confirmation"
+                        value="Yes"
+                        required
+                    >
+
+                    <span>
+                        I confirm that the information provided above
+                        is correct and I understand that this request
+                        may be shared with suitable donors and relevant
+                        blood-support services for emergency coordination.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="button-area">
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    🩸 Submit Blood Request
+                </button>
+
+                <a
+                    href="/dashboard"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <div class="info-box">
+
+        <h3>
+            ℹ️ Important Information
+        </h3>
+
+        <ul>
+
+            <li>
+                Please enter the correct blood group and number of units.
+            </li>
+
+            <li>
+                Provide the hospital's correct location and contact details.
+            </li>
+
+            <li>
+                Emergency requests may be processed with higher priority.
+            </li>
+
+            <li>
+                The system can search for matching donors based on
+                blood group and location.
+            </li>
+
+            <li>
+                Nearby blood banks can also be considered during
+                emergency situations.
+            </li>
+
+            <li>
+                This platform does not replace professional medical
+                or emergency services.
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        🩸 <strong>Smart Blood Donor Finder</strong>
+    </p>
+
+    <p>
+        The hope of every Indian in search of a voluntary blood donor
+    </p>
+
+    <p>
+        © 2026 Smart Blood Donor Finder. All Rights Reserved.
+    </p>
+
+    <p>
+        <a href="/about">About Us</a>
+        &nbsp; | &nbsp;
+        <a href="/feedback">Feedback</a>
+        &nbsp; | &nbsp;
+        <a href="/contact">Contact Us</a>
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    // Prevent selecting a past date
+    const dateInput = document.getElementById("required_date");
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    dateInput.min = `${year}-${month}-${day}`;
+
+
+    // Form validation
+    document.getElementById("bloodRequestForm").addEventListener("submit", function(event) {
+
+        const units = document.getElementById("required_units").value;
+        const mobile = document.getElementById("contact").value;
+        const pincode = document.getElementById("pincode").value;
+
+        if (units < 1) {
+            alert("Please enter at least 1 required blood unit.");
+            event.preventDefault();
+            return;
+        }
+
+        if (!/^[0-9]{10}$/.test(mobile)) {
+            alert("Please enter a valid 10-digit contact number.");
+            event.preventDefault();
+            return;
+        }
+
+        if (!/^[0-9]{6}$/.test(pincode)) {
+            alert("Please enter a valid 6-digit PIN code.");
+            event.preventDefault();
+            return;
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

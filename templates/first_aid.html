@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Aid &amp; Helpline - Smart Blood Donor Finder</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f5f7fa; color: #333; }
+        header { background: #b30000; color: white; padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        header h1 { margin: 0; font-size: 24px; }
+        nav { display: flex; gap: 16px; flex-wrap: wrap; }
+        nav a { color: white; font-weight: bold; text-decoration: none; }
+        main { width: 90%; max-width: 1050px; margin: 36px auto; }
+        h2 { color: #b30000; text-align: center; margin-bottom: 8px; }
+        .intro { text-align: center; color: #666; margin-bottom: 28px; }
+        .emergency-banner { background: #fff0f0; border: 1px solid #f1b5b5; border-radius: 10px; padding: 18px; margin-bottom: 24px; text-align: center; }
+        .emergency-banner strong, .emergency-banner a { color: #b30000; }
+        .content-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; }
+        .panel { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+        .panel h3 { margin: 0 0 18px; color: #b30000; }
+        .helpline { border-bottom: 1px solid #e5e7eb; padding: 0 0 16px; margin-bottom: 16px; }
+        .helpline:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+        .helpline h4 { margin: 0 0 7px; color: #333; }
+        .helpline p { color: #666; margin: 6px 0; line-height: 1.5; }
+        .call-button { display: inline-block; margin-top: 8px; padding: 10px 14px; border-radius: 6px; background: #b30000; color: white; text-decoration: none; font-weight: bold; }
+        .call-button:hover { background: #8f0000; }
+        .steps { margin: 0; padding-left: 22px; }
+        .steps li { margin: 0 0 14px; line-height: 1.5; }
+        .notice { color: #666; font-size: 13px; line-height: 1.5; margin-top: 18px; }
+        @media (max-width: 750px) { .content-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Blood Donor Finder</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('ambulances') }}">Ambulances</a>
+            <a href="{{ url_for('blood_request') }}">Request Blood</a>
+        </nav>
+    </header>
+    <main>
+        <h2>First Aid &amp; Helpline</h2>
+        <p class="intro">Get emergency contacts and simple first-aid guidance while help is on the way.</p>
+
+        <div class="emergency-banner">
+            For an immediate medical emergency, call <strong><a href="tel:108">108</a></strong> or <strong><a href="tel:112">112</a></strong> now.
+        </div>
+
+        <div class="content-grid">
+            <section class="panel">
+                <h3>Emergency Helplines</h3>
+                {% for helpline in helplines %}
+                <article class="helpline">
+                    <h4>{{ helpline.name }}</h4>
+                    <p>{{ helpline.description }}</p>
+                    <p><strong>Availability:</strong> {{ helpline.availability }}</p>
+                    <a class="call-button" href="tel:{{ helpline.phone }}">Call {{ helpline.phone }}</a>
+                </article>
+                {% endfor %}
+            </section>
+
+            <section class="panel">
+                <h3>Basic First Aid</h3>
+                <ol class="steps">
+                    {% for step in first_aid_steps %}
+                    <li>{{ step }}</li>
+                    {% endfor %}
+                </ol>
+                <p class="notice">This information does not replace professional medical advice. Contact emergency services for serious injuries or symptoms.</p>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
