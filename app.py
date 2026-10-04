@@ -129,9 +129,6 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route("/testimonials")
-def testimonials():
-    return render_template("testimonials.html")
 
 # =========================================================
 # TESTIMONIALS
