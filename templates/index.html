@@ -74,7 +74,6 @@
             text-decoration: underline;
         }
 
-
         /* =========================
            HERO SECTION
         ========================= */
@@ -163,7 +162,6 @@
             color: #b30000;
         }
 
-
         /* =========================
            EMERGENCY SECTION
         ========================= */
@@ -199,7 +197,6 @@
             background: #8f0000;
         }
 
-
         /* =========================
            SECTION COMMON
         ========================= */
@@ -225,7 +222,6 @@
             margin: 0 auto 40px;
             line-height: 1.6;
         }
-
 
         /* =========================
            FEATURES
@@ -264,7 +260,6 @@
             color: #666;
             line-height: 1.6;
         }
-
 
         /* =========================
            HOW IT WORKS
@@ -309,7 +304,6 @@
             font-size: 14px;
         }
 
-
         /* =========================
            ABOUT
         ========================= */
@@ -329,7 +323,6 @@
         .about-box strong {
             color: #b30000;
         }
-
 
         /* =========================
            QUICK ACTIONS
@@ -372,6 +365,9 @@
             font-weight: bold;
         }
 
+        .action-card a:hover {
+            background: #8f0000;
+        }
 
         /* =========================
            STATS
@@ -400,7 +396,6 @@
         .stat p {
             font-size: 14px;
         }
-
 
         /* =========================
            TESTIMONIAL
@@ -432,7 +427,6 @@
             color: #b30000;
         }
 
-
         /* =========================
            CTA
         ========================= */
@@ -453,7 +447,6 @@
             color: #555;
             margin-bottom: 25px;
         }
-
 
         /* =========================
            FOOTER
@@ -511,7 +504,6 @@
             font-size: 13px;
         }
 
-
         /* =========================
            MOBILE
         ========================= */
@@ -545,7 +537,6 @@
 
         }
 
-
         @media (max-width: 600px) {
 
             .hero h1 {
@@ -578,9 +569,7 @@
 
 </head>
 
-
 <body>
-
 
 <!-- =========================
      HEADER
@@ -600,44 +589,41 @@
 
     </div>
 
-
     <nav>
 
-        <a href="/">Home</a>
+        <a href="{{ url_for('home') }}">Home</a>
 
-        <a href="/register">
+        <a href="{{ url_for('register') }}">
             Register as Donor
         </a>
 
-        <a href="/find-donor">
+        <a href="{{ url_for('find_donor') }}">
             Registered Donors
         </a>
 
-        <a href="/find-donor">
+        <a href="{{ url_for('find_donor') }}">
             Find Donor
         </a>
 
-        <a href="/about">
+        <a href="{{ url_for('about') }}">
             About Us
         </a>
 
-        <a href="/testimonials">
+        <a href="{{ url_for('testimonials') }}">
             Testimonials
         </a>
 
-        <a href="/feedback">
+        <a href="{{ url_for('feedback') }}">
             Feedback
         </a>
 
-        <a href="/login">
+        <a href="{{ url_for('login') }}">
             Login
         </a>
 
     </nav>
 
 </header>
-
-
 
 <!-- =========================
      HERO
@@ -665,19 +651,17 @@
             suitable blood donors quickly using smart donor matching.
         </p>
 
-
         <div class="hero-buttons">
 
             <a
-                href="/register"
+                href="{{ url_for('register') }}"
                 class="btn btn-primary"
             >
                 🩸 Register as Donor
             </a>
 
-
             <a
-                href="/find-donor"
+                href="{{ url_for('find_donor') }}"
                 class="btn btn-outline"
             >
                 🔎 Find a Donor
@@ -688,8 +672,6 @@
     </div>
 
 </section>
-
-
 
 <!-- =========================
      EMERGENCY
@@ -707,15 +689,13 @@
     </p>
 
     <a
-        href="/request-details"
+        href="{{ url_for('blood_request') }}"
         class="emergency-btn"
     >
         🆘 Raise Emergency Blood Request
     </a>
 
 </section>
-
-
 
 <!-- =========================
      QUICK ACTIONS
@@ -732,9 +712,7 @@
         patients, hospitals and blood banks.
     </p>
 
-
     <div class="quick-actions">
-
 
         <div class="action-card">
 
@@ -751,13 +729,11 @@
                 and help people during emergencies.
             </p>
 
-            <a href="/register">
+            <a href="{{ url_for('register') }}">
                 Register
             </a>
 
         </div>
-
-
 
         <div class="action-card">
 
@@ -774,13 +750,11 @@
                 and location.
             </p>
 
-            <a href="/find-donor">
+            <a href="{{ url_for('find_donor') }}">
                 Search
             </a>
 
         </div>
-
-
 
         <div class="action-card">
 
@@ -797,13 +771,11 @@
                 or hospital.
             </p>
 
-            <a href="/request-details">
+            <a href="{{ url_for('blood_request') }}">
                 Request Blood
             </a>
 
         </div>
-
-
 
         <div class="action-card">
 
@@ -820,7 +792,7 @@
                 blood resources.
             </p>
 
-            <a href="/blood-banks">
+            <a href="{{ url_for('blood_bank') }}">
                 View Banks
             </a>
 
@@ -829,8 +801,6 @@
     </div>
 
 </section>
-
-
 
 <!-- =========================
      FEATURES
@@ -847,9 +817,7 @@
         location and availability to support faster blood matching.
     </p>
 
-
     <div class="features">
-
 
         <div class="feature-card">
 
@@ -868,8 +836,6 @@
 
         </div>
 
-
-
         <div class="feature-card">
 
             <div class="feature-icon">
@@ -886,8 +852,6 @@
             </p>
 
         </div>
-
-
 
         <div class="feature-card">
 
@@ -906,8 +870,6 @@
 
         </div>
 
-
-
         <div class="feature-card">
 
             <div class="feature-icon">
@@ -925,8 +887,6 @@
 
         </div>
 
-
-
         <div class="feature-card">
 
             <div class="feature-icon">
@@ -943,8 +903,6 @@
             </p>
 
         </div>
-
-
 
         <div class="feature-card">
 
@@ -967,8 +925,6 @@
 
 </section>
 
-
-
 <!-- =========================
      HOW IT WORKS
 ========================= -->
@@ -984,9 +940,7 @@
         suitable blood donors.
     </p>
 
-
     <div class="steps">
-
 
         <div class="step">
 
@@ -1005,8 +959,6 @@
 
         </div>
 
-
-
         <div class="step">
 
             <div class="step-number">
@@ -1024,8 +976,6 @@
 
         </div>
 
-
-
         <div class="step">
 
             <div class="step-number">
@@ -1042,8 +992,6 @@
             </p>
 
         </div>
-
-
 
         <div class="step">
 
@@ -1066,8 +1014,6 @@
 
 </section>
 
-
-
 <!-- =========================
      STATISTICS
 ========================= -->
@@ -1075,7 +1021,6 @@
 <section class="stats-section">
 
     <div class="stats">
-
 
         <div class="stat">
 
@@ -1089,8 +1034,6 @@
 
         </div>
 
-
-
         <div class="stat">
 
             <h2>
@@ -1103,8 +1046,6 @@
 
         </div>
 
-
-
         <div class="stat">
 
             <h2>
@@ -1116,8 +1057,6 @@
             </p>
 
         </div>
-
-
 
         <div class="stat">
 
@@ -1134,8 +1073,6 @@
     </div>
 
 </section>
-
-
 
 <!-- =========================
      ABOUT PROJECT
@@ -1180,8 +1117,6 @@
 
 </section>
 
-
-
 <!-- =========================
      TESTIMONIAL
 ========================= -->
@@ -1195,7 +1130,6 @@
     <p class="section-subtitle">
         Stories and feedback from people using the platform.
     </p>
-
 
     <div class="testimonial">
 
@@ -1217,8 +1151,6 @@
 
 </section>
 
-
-
 <!-- =========================
      CTA
 ========================= -->
@@ -1235,15 +1167,13 @@
     </p>
 
     <a
-        href="/register"
+        href="{{ url_for('register') }}"
         class="emergency-btn"
     >
         🩸 Register as Donor
     </a>
 
 </section>
-
-
 
 <!-- =========================
      FOOTER
@@ -1252,7 +1182,6 @@
 <footer>
 
     <div class="footer-grid">
-
 
         <div>
 
@@ -1272,8 +1201,6 @@
 
         </div>
 
-
-
         <div>
 
             <h3>
@@ -1283,25 +1210,25 @@
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="{{ url_for('home') }}">
                         Home
                     </a>
                 </li>
 
                 <li>
-                    <a href="/register">
+                    <a href="{{ url_for('register') }}">
                         Register
                     </a>
                 </li>
 
                 <li>
-                    <a href="/find-donor">
+                    <a href="{{ url_for('find_donor') }}">
                         Find Donor
                     </a>
                 </li>
 
                 <li>
-                    <a href="/about">
+                    <a href="{{ url_for('about') }}">
                         About Us
                     </a>
                 </li>
@@ -1309,8 +1236,6 @@
             </ul>
 
         </div>
-
-
 
         <div>
 
@@ -1321,25 +1246,25 @@
             <ul>
 
                 <li>
-                    <a href="/request-details">
+                    <a href="{{ url_for('blood_request') }}">
                         Blood Request
                     </a>
                 </li>
 
                 <li>
-                    <a href="/blood-banks">
+                    <a href="{{ url_for('blood_bank') }}">
                         Blood Banks
                     </a>
                 </li>
 
                 <li>
-                    <a href="/feedback">
+                    <a href="{{ url_for('feedback') }}">
                         Feedback
                     </a>
                 </li>
 
                 <li>
-                    <a href="/contact">
+                    <a href="{{ url_for('contact') }}">
                         Contact Us
                     </a>
                 </li>
@@ -1347,8 +1272,6 @@
             </ul>
 
         </div>
-
-
 
         <div>
 
@@ -1359,19 +1282,19 @@
             <ul>
 
                 <li>
-                    <a href="/login">
+                    <a href="{{ url_for('login') }}">
                         Login
                     </a>
                 </li>
 
                 <li>
-                    <a href="/register">
+                    <a href="{{ url_for('register') }}">
                         Donor Registration
                     </a>
                 </li>
 
                 <li>
-                    <a href="/login">
+                    <a href="{{ url_for('login') }}">
                         Dashboard
                     </a>
                 </li>
@@ -1382,7 +1305,6 @@
 
     </div>
 
-
     <div class="copyright">
 
         © 2026 Smart Blood Donor Finder.
@@ -1391,7 +1313,6 @@
     </div>
 
 </footer>
-
 
 </body>
 </html>
