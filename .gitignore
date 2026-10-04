@@ -11,3 +11,6 @@ __pycache__/
 .vscode/
 
 cloudflared.exe
+
+instance/
+smart_blood_donor_finder.db
